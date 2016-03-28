@@ -5,35 +5,36 @@ FROM alpine
 MAINTAINER TheLazieR <thelazier@gmail.com>
 LABEL description="Dockerized P2Pool-Dash"
 
-RUN apk --no-cache add \
-  git \
-  perl \
-  python \
-  python-dev \
-  py-twisted \
-  gcc \
-  g++
-
 WORKDIR /p2pool
 ENV P2POOL_DASH_HOME /p2pool/p2pool-dash
 ENV P2POOL_DASH_REPO https://github.com/thelazier/p2pool-dash
 
-RUN git clone -b master $P2POOL_DASH_REPO $P2POOL_DASH_HOME
-
-WORKDIR $P2POOL_DASH_HOME
-RUN git submodule init \
+RUN apk --no-cache add \
+    git \
+    perl \
+    python \
+    python-dev \
+    py-twisted \
+    gcc \
+    g++ \
+  && git clone -b master $P2POOL_DASH_REPO $P2POOL_DASH_HOME \
+  && cd $P2POOL_DASH_HOME \
+  && git submodule init \
   && git submodule update \
-  && cd x11-hash && python setup.py install && cd ..
+  && cd x11-hash && python setup.py install && cd .. \
+  && apk -v del \
+    git \
+    python-dev \
+    perl \
+    gcc \
+    g++
 
-# Remove to reduce size
-RUN apk -v del \
-  git \
-  python-dev \
-  perl \
-  gcc \
-  g++
 
 EXPOSE 7903 8999 17903 18999
+
+WORKDIR $P2POOL_DASH_HOME
+RUN chown -R nobody $P2POOL_DASH_HOME
+USER nobody
 
 ENV DASH_RPCUSER dashrpc
 ENV DASH_RPCPASSWORD 4C3NET7icz9zNE3CY1X7eSVrtpnSb6KcjEgMJW3armRV
@@ -45,7 +46,6 @@ ENV DASH_DONATION 0
 ENV DASH_TESTNET 0
 
 # Default arguments, can be overriden
-WORKDIR $P2POOL_DASH_HOME
 CMD python run_p2pool.py \
   --testnet $DASH_TESTNET \
   --give-author $DASH_DONATION \
