@@ -43,18 +43,18 @@ ENV DASH_RPCPORT 9998
 ENV DASH_P2PPORT 9999
 ENV DASH_FEE 0
 ENV DASH_DONATION 0
-ENV DASH_TESTNETPARAM="" 
+ENV DASH_ADDRESS XbDbC3LmKy9VrsFcV9m7BjdsEJtaKPDjTo
+ENV DASH_OTHER_PARAM --no-bugreport --disable-advertise
 
 # Default arguments, can be overriden
 CMD python run_p2pool.py \
-  $DASH_TESTNETPARAM \
   --give-author $DASH_DONATION \
   -f $DASH_FEE \
-  --no-bugreport \
-  --disable-advertise \
+  -a $DASH_ADDRESS \
   --dashd-address $DASH_RPCHOST \
   --dashd-rpc-port $DASH_RPCPORT \
   --dashd-p2p-port $DASH_P2PPORT \
+  $DASH_OTHER_PARAM \
   $DASH_RPCUSER $DASH_RPCPASSWORD
 
 # End.

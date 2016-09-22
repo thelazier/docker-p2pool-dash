@@ -5,4 +5,5 @@ DASH_RPCPORT=19998
 DASH_P2PPORT=19999
 DASH_FEE=0
 DASH_DONATION=0
-DASH_TESTNETPARAM="--testnet"
+DASH_ADDRESS=ydahSbZKWUjBi6jHeWjLgr7navPoZVCgwH
+DASH_OTHER_PARAM="--testnet --no-bugreport --disable-advertise"
