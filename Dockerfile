@@ -43,11 +43,11 @@ ENV DASH_RPCPORT 9998
 ENV DASH_P2PPORT 9999
 ENV DASH_FEE 0
 ENV DASH_DONATION 0
-ENV DASH_TESTNET 0
+ENV DASH_TESTNETPARAM="" 
 
 # Default arguments, can be overriden
 CMD python run_p2pool.py \
-  --testnet $DASH_TESTNET \
+  $DASH_TESTNETPARAM \
   --give-author $DASH_DONATION \
   -f $DASH_FEE \
   --no-bugreport \
