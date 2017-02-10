@@ -21,7 +21,7 @@ RUN apk --no-cache add \
   && cd $P2POOL_DASH_HOME \
   && git submodule init \
   && git submodule update \
-  && cd x11-hash && python setup.py install && cd .. \
+  && cd dash_hash && python setup.py install && cd .. \
   && apk -v del \
     git \
     python-dev \
