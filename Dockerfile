@@ -17,7 +17,7 @@ RUN apk --no-cache add \
     py-twisted \
     gcc \
     g++ \
-  && git clone -b master $P2POOL_DASH_REPO $P2POOL_DASH_HOME \
+  && git clone $P2POOL_DASH_REPO $P2POOL_DASH_HOME \
   && cd $P2POOL_DASH_HOME \
   && git submodule init \
   && git submodule update \
