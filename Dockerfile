@@ -1,7 +1,7 @@
 # Dockerfile for P2Pool-Dash Server
 # https://www.dash.org/
 
-FROM alpine
+FROM alpine as builder
 MAINTAINER TheLazieR <thelazier@gmail.com>
 LABEL description="Dockerized P2Pool-Dash"
 
@@ -29,9 +29,15 @@ RUN apk --no-cache add \
     gcc \
     g++
 
-
+FROM alpine
+MAINTAINER TheLazieR <thelazier@gmail.com>
+LABEL description="Dockerized P2Pool-Dash"
+WORKDIR /p2pool
+RUN apk --no-cache add python py-twisted
+COPY --from=builder /p2pool/p2pool-dash .
 EXPOSE 7903 8999 17903 18999
 
+ENV P2POOL_DASH_HOME /p2pool/p2pool-dash
 WORKDIR $P2POOL_DASH_HOME
 RUN chown -R nobody $P2POOL_DASH_HOME
 USER nobody
